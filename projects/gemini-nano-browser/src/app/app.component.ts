@@ -1,21 +1,19 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'gemini-nano-browser';
+  prompt!: string;
+  response!: string;
 
-  ngOnInit() {
-    this.testAI()
-  }
-
-  async testAI() {
+  async getAIResponse() {
+    this.response = 'Initializing AI...';
     // Checks if  ai capabilities are supported by the browser
     const chromeAI = await (window as any).ai?.assistant.capabilities();
 
@@ -23,14 +21,14 @@ export class AppComponent {
       // Creates session with gemini nano model.
       const session = await (window as any).ai.assistant.create();
 
+      this.response = 'Generating Response...';
       // Execute a prompt
-      let answer = await session.prompt("What is AI?");
-      console.log(answer);
+      this.response = await session.prompt(this.prompt);
 
       // Destroys the session
       await session.destroy();
     } else {
-      console.log('Chrome Built-In AI not supported.')
+      this.response = 'Chrome Built-In AI not supported.';
     }
   }
 }

@@ -1,6 +1,6 @@
 <div class="gemini-nano-chat">
   <input class="gemini-nano-chat__input" type="text" placeholder="Enter your prompt" [(ngModel)]="prompt">
-  <button class="gemini-nano-chat__btn" type="button">Get Response</button>
+  <button class="gemini-nano-chat__btn" type="button" (click)="getAIResponse()">Get Response</button>
   <textarea class="gemini-nano-chat__response" [(ngModel)]="response"></textarea>
 </div>
 <!-- <router-outlet /> -->
